@@ -21,8 +21,8 @@ const TechTask = ({ selectedSubDomain, setSelectedSubDomain }: Props) => {
     // Based on the subdomain we are filtering the task
     const filteredTask = techTaskData.filter(
       (task) =>
-        task.label === selectedSubDomain &&
-        (isSC === true ? task.for === "senior" : task.for === "junior")
+        task.label === selectedSubDomain 
+      //&&(isSC === true ? task.for === "senior" : task.for === "junior")
     );
     if (filteredTask) {
       setFilteredTask(filteredTask);
@@ -215,30 +215,30 @@ export default TechTask;
 const techTaskData = [
   {
     label: "backend",
-    title: "Blog Management API",
+    title: "Candidate Recruitment API",
     description:
-      "Develop a Blog Management API that allows users to create, manage, and interact with blog posts. The backend can be implemented in any programming language and can use any database (SQL or NoSQL) for data storage. Core Features: Users can create a blog post with a title and content. Users can view all blog posts. Users can update a blog post. Users can delete a blog post. Users can add comments to a blog post. Bonus Points: Implement likes on blog posts. Add JWT Authentication to allow users to manage their own posts securely. Deploy the API on a cloud platform. Write a comprehensive README with API documentation, including request and response examples. Use Go for the backend. Use an SQL database.",
+      "Build an API to manage a candidate's journey from application to hiring.\n\nBase Requirements : 1) Candidate Management: CRUD for candidates (Name, Email, Role, Resume text).\n2) Fixed Pipeline : Implement sequential stages: APPLIED ->SCREENING -> INTERVIEW -> HIRED/REJECTED.\n3) Basic RBAC: 'Candidate' role (view own status) and 'Recruiter' role (view all, move candidates to the next stage).\n\nDeliverables : 1) Documented Endpoints.\n2) Database schema diagram showing Candidate and User roles.",
     for: "junior",
   },
   {
     label: "backend",
-    title: "To-Do List API",
+    title: "Personal Locker API",
     description:
-      "Develop a To-Do List API that allows users to create, manage, and track their tasks. The backend can be implemented in any programming language and can use any database (SQL or NoSQL) for data storage. Core Features: Users can create a task with a title and description. Users can view all their tasks. Users can update a task's title, description, or completion status. Users can delete a task. Bonus Points: Implement due dates for tasks and allow sorting by due date. Add categories or tags to tasks for better organization. Implement JWT Authentication so users can manage their own tasks. Deploy the API on a cloud platform. Use Go for the backend and an SQL database for storage. Write a README with API documentation.",
+      "Create a secure backend for personal document storage. \n\nBase Requirements: 1) Authentication: Endpoints for user Registration and Login (JWT or Session-based).\n2) File Handling: Secure endpoints for uploading and downloading files (PDFs, Images), restricted to the file owner.\n3) Integrity: Error handling for empty files, unsupported formats, and unauthorized access attempts.\n4) Metadata: Store file name, upload timestamp, size, and User ID in the database.\n\nDeliverables: 1) Working API: Backend with local or cloud storage integration (e.g., AWS S3).\n2) README: Guide on handling multi-part form data and implementing secure authentication.",
     for: "junior",
   },
   {
     label: "backend",
-    title: "Advanced Event Management API",
+    title: "Advanced Appointment and Scheduling System",
     description:
-      "Develop an Advanced Event Management API that allows users to create, manage, and track events, including attendee management, ticketing, and role-based permissions. The backend can be implemented in any programming language and can use any database (SQL or NoSQL) for data storage. Core Features: Users can create an event with a title, description, date, location, and event type (public/private). Users can view all public events and only their own private events. Users can update or delete their own events. Users can register for an event and receive a QR code ticket for entry. Event organizers can track attendance using QR code scanning. Implement role-based access control (RBAC): Organizer: Can create, update, and manage event details & attendees. Attendee: Can register for events and view details. Write a comprehensive README with API documentation, including request/response examples. Bonus Points: Implement ticket pricing with different tiers (e.g., Regular, VIP). Add real-time notifications for event updates using WebSockets. Implement search and filtering (e.g., by date, location, event type). Deploy the API on a cloud platform with auto-scaling. Use Go for the backend and an SQL database for storage.",
+      "Advanced Appointment & Scheduling System An API for professionals (e.g., Doctors) to manage availability and bookings. \n\nBase Requirements: 1) Recurring Schedules: Logic to define availability every Monday-Friday in 30-minute blocks. \n2) Collision Engine: Prevent double-booking and block past-time reservations. \nBonus (OTP Auth): Implement Email/SMS OTP verification for login using a third-party service (e.g., Nodemailer/Twilio). \n\nDeliverables: 1) A robust 'Rescheduling' endpoint that handles availability checks atomically. \n2) Unified endpoint for a user's full schedule (bookings + available slots).",
     for: "senior",
   },
   {
     label: "backend",
-    title: "Advanced Multi-Tenant Inventory Management API",
+    title: "Collaborative Group Study API",
     description:
-      "Develop an Advanced Multi-Tenant Inventory Management API that allows businesses to manage their inventory, track stock levels, handle orders, and manage suppliers efficiently. The backend can be implemented in any programming language and can use any database (SQL or NoSQL) for data storage. Core Features: Multi-Tenant System: Each business has its own separate inventory and users. Product Management: Businesses can add, update, and delete products, including batch tracking and expiry dates. Stock Management: Businesses can track stock levels across multiple warehouses/locations and receive low-stock alerts. Order Management: Businesses can place and manage customer orders, update order status (Pending, Shipped, Delivered, Canceled). Businesses can track order fulfillment, ensuring stock availability before confirming orders. Supplier Management: Businesses can add and manage suppliers, track incoming stock, and create purchase orders. Role-Based Access Control (RBAC): Admin: Can manage all products, orders, warehouses, and users within their business. Employee: Can manage stock levels but cannot delete products. Warehouse Manager: Can update stock across warehouses but cannot handle orders. Sales and Stock Reports: Generate reports for sales trends, stock usage, and purchase orders. Write a README with API documentation and sample request/response examples. Bonus Points: RESTful API with Pagination & Filtering: Support query-based filtering (e.g., by product category, stock status). Supplier and Purchase Order Tracking: Businesses can view incoming stock shipments from suppliers. Deploy the API on a cloud platform with auto-scaling. Use Go for the backend and an SQL database for structured data storage.",
+      "A platform for hosts to create study sessions with real-time elements. \n\nBase Requirements: 1) Session Management: Host generates a unique code; others join via JWT-secured endpoints. \n2) Real-time Communication: Implement a chatting facility. \n3) Use WebSockets (Socket.io) for the chat and real-time 'Member Joined/Left' notifications. \n\nDeliverables: 1) WebSocket implementation for instant messaging. \n2) Logic for session persistence (what happens when the host leaves?).",
     for: "senior",
   },
   {
