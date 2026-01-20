@@ -242,38 +242,24 @@ const techTaskData = [
       "A platform for hosts to create study sessions with real-time elements. \n\nBase Requirements: 1) Session Management: Host generates a unique code; others join via JWT-secured endpoints. \n2) Real-time Communication: Implement a chatting facility. \n3) Use WebSockets (Socket.io) for the chat and real-time 'Member Joined/Left' notifications. \n\nDeliverables: 1) WebSocket implementation for instant messaging. \n2) Logic for session persistence (what happens when the host leaves?).",
     for: "senior",
   },
+  
   {
     label: "ml",
-    title: "Rental Price Prediction Model",
+    title: "Rock Paper Scissors Image Classification",
     description:
-      "Perform data visualization and generate key insights from the given dataset. Then, build a machine learning model to predict rental prices based on various features such as location, property size, number of bedrooms, and amenities. Requirements: Conduct Exploratory Data Analysis (EDA) to identify trends, correlations, and anomalies. Visualize rental price distribution, correlations between price and key features, and geographic rent variations. Preprocess the dataset (handle missing values, normalize data, encode categorical variables). Train and evaluate a machine learning model for rent prediction. Interpret model results and provide actionable insights based on the findings.",
-    resources: [
-      "https://drive.google.com/file/d/193NnzSRruE3uZvkvT4XaUDNI_oVHbA_I/view?usp=drive_link",
-      "https://drive.google.com/file/d/1XNK7ZL-5a4enlcubVoro0VYZ0QgZb42X/view?usp=drive_link",
-    ],
+      "Build a visual recognition system capable of identifying and classifying hand gestures representing Rock, Paper, and Scissors from image data.\n\n Base Requirements 1) Classification Engine: Develop a logic-based system to accurately differentiate between the three distinct hand gesture categories.\n2) Performance Validation: Test the system against unseen images to measure its reliability and error rate across all gesture classes.\n\n Deliverables: 1) Functional Classifier: A completed system ready to receive an image input and return the corresponding gesture label (Rock, Paper, or Scissors).\n2) Results Visualization: A detailed summary of the system’s performance, including success rates and a breakdown of classification accuracy for each gesture.",
     for: "junior",
+    resources:["https://drive.google.com/file/d/1EyYTbAE4IQY4eA1dqOlnDCEUIdZsj0ey/view?usp=sharing"]
   },
   {
     label: "ml",
-    title: "Rock Paper Scissors Classification",
+    title: "COVID-19 Sentiment Analysis Model",
     description:
-      "Develop a Sequential Machine Learning Model that can identify and categorize images into predefined classes.",
-    for: "junior",
-  },
-  {
-    label: "ml",
-    title: "Covid 19 Tweet NLP Model",
-    description:
-      "Build a machine learning model from scratch to train on the CIFAR-10 dataset using only NumPy, Pandas, and other basic libraries (without TensorFlow or PyTorch). The model should be a fully connected neural network that can classify images into 10 categories.",
+      "Develop a system to analyze and categorize public sentiment expressed in pandemic-related text data to track social trends and concern levels.\n\n Base Requirements: 1) Text Preparation: Standardize raw text data from the dataset to ensure it is suitable for analysis across various sentiment categories.\n2) Sentiment Categorization: Establish a multi-class system to classify entries into distinct sentiment groups ( Positive, Neutral, Negative,).\n3) Evaluation Framework: Apply statistical measures to verify the accuracy and reliability of the classification results against known labels.\n\n Deliverables: 1) Analysis Pipeline: A complete workflow that takes raw COVID-19 text data and outputs structured sentiment insights.\n2) Data Insights Report: Visualizations showing the distribution of sentiments and identifying the most prominent themes within the dataset.",
     for: "senior",
+    resources:["https://drive.google.com/file/d/14wabfRU3u41ir6TlFJvqiDDFETjg29Mv/view?usp=drive_link"]
   },
-  {
-    label: "ml",
-    title: "Advanced Spam Detection Model",
-    description:
-      "Build an advanced Spam Detection Model for Messages, using Natural Language Processing (NLP) techniques and an Advanced Deep Learning-based approach.",
-    for: "senior",
-  },
+  
   {
     label: "frontend",
     title: "Event Registration Portal",
