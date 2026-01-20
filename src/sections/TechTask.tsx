@@ -115,6 +115,7 @@ const TechTask = ({ selectedSubDomain, setSelectedSubDomain }: Props) => {
           >
             AI/ML
           </button>
+          
           {!isSC && (
             <button
               type="button"
@@ -254,14 +255,14 @@ const techTaskData = [
   },
   {
     label: "ml",
-    title: "Sequential Image Classification Model",
+    title: "Rock Paper Scissors Classification",
     description:
       "Develop a Sequential Machine Learning Model that can identify and categorize images into predefined classes.",
     for: "junior",
   },
   {
     label: "ml",
-    title: "CIFAR-10 Neural Network from Scratch",
+    title: "Covid 19 Tweet NLP Model",
     description:
       "Build a machine learning model from scratch to train on the CIFAR-10 dataset using only NumPy, Pandas, and other basic libraries (without TensorFlow or PyTorch). The model should be a fully connected neural network that can classify images into 10 categories.",
     for: "senior",
@@ -275,30 +276,30 @@ const techTaskData = [
   },
   {
     label: "frontend",
-    title: "Responsive Portfolio Website",
+    title: "Event Registration Portal",
     description:
-      "Build a personal portfolio website that demonstrates responsiveness, user interaction, and creative design. Mandatory Requirements: Header & Navigation, About Section, Projects Section, Contact Section, Footer, Styling & Color Constraints, Hidden Validator, and Documentation. The website must include custom CSS animations, real-time form validation, and be fully responsive. Bonus Challenges: Implement a 'Back to Top' button with custom animation, add dark mode toggle, display a live clock that shows your local time zone using JavaScript.",
+      "Develop a responsive, well-structured frontend portal for club event registrations that prioritizes clean UI and real-time user feedback.\n\n Base Requirements: 1) Core Structure: Include a header, navigation, footer, and dedicated sections for Event Details, Registration, and Contact Info.\n2) Design Consistency: Create a layout and flow inspired by the official club website while maintaining a beginner-friendly UI.\n3) Form Validation: Implement real-time input validation for all mandatory registration fields to ensure data integrity.\n\nDeliverables: 1) Responsive Frontend: A fully functional, mobile-friendly portal reflecting the club's branding.\n 2) Interactive Form: A validated registration form with success feedback (e.g., confirmation popup or message). \n3) Enhanced UX Features: Implementation of a form progress indicator or a dynamic event countdown timer.",
     for: "junior",
   },
   {
     label: "frontend",
-    title: "Interactive To-Do List",
+    title: "Movie Search Engine (API Integration)",
     description:
-      "Create a dynamic to-do list application that integrates custom input behaviors, sorting, and personalized motivational messages. Mandatory Requirements: Task Addition with autocomplete for recurring tasks, Task Display with custom styling based on priority, Interactivity for marking tasks as completed, Custom Sorting Logic, Local Storage Checksum, and Documentation. Bonus Challenges: Persist tasks in localStorage, add filters to switch between 'All,' 'Active,' and 'Completed' tasks, implement a custom notification for overdue tasks.",
+      "Develop a responsive web application that fetches and displays movie data from the OMDB API using an intuitive, minimal interface.\n\n Base Requirements: 1) API Integration: Connect to the OMDB API to fetch real-time data (Title, Year, Poster, Rating) based on user queries.\n 2) Search Functionality: Implement a search bar with robust error handling for empty or invalid results.\n 3) Responsive UI: Create a clean, organized layout that adapts to different screen sizes and ensures smooth user interaction.\n\n Deliverables: 1) Functional Search Engine: A frontend application capable of dynamic content rendering from external API calls.\n2) Loading & Error States: Implementation of UI feedback such as loading indicators and user-friendly error messages.\n3) Enhanced Filtering: (Optional) Logic to filter results based on specific criteria, such as minimum IMDB ratings.",
     for: "junior",
   },
   {
     label: "frontend",
-    title: "Weather Dashboard with API Integration",
+    title: "Gamified Application Journey",
     description:
-      "Develop a weather dashboard using a JavaScript framework of your choice. This dashboard must integrate with at least two niche weather APIs, provide a multifaceted view of weather information, and incorporate personalized features. Mandatory Requirements: City Weather Search, Dynamic Visualization, Forecast Cards, Error Handling, Weather Journal, Temperature Unit Toggle, API Key Obfuscation, and Documentation. Bonus Challenges: Add geolocation support with an animated UI element, implement a 'Favorites' list with drag-and-drop reordering, provide an 'Export to PDF' button that exports the weather journal, optimize performance using memoization or debouncing.",
+      "Transform a standard four-step application process into an interactive, level-up experience using XP rewards, animated progress tracking, and persistent badge unlocks.\n\n Base Requirements: 1) Gamified Workflow: Implement a four-stage flow (Profile, Tasks, Submission, Status) guided by an animated horizontal stepper and a circular progress visual (SVG/Canvas).\n2) XP Engine: Build logic to award specific XP (20 for Profile, 10 per Task, 30 for Submission) and trigger badge unlocks at 50 and 100 XP thresholds.\n3) Data Persistence: Use localStorage to ensure XP totals, step progress, and earned badges remain saved across browser sessions.\n\n Deliverables 1) Interactive Dashboard: A frontend featuring smooth gradient transitions, a live XP counter, and an animated badge gallery.\n2) XP & Milestone Logic: A functional state management system that handles point accumulation and unlocks visual rewards.\n3) Enhanced UX Components: Implementation of 'pop-in' badge animations and optional features like a confetti burst or a social media 'snapshot' share tool.",
     for: "senior",
   },
   {
     label: "frontend",
-    title: "E-Commerce Product Listing Page",
+    title: "The Minimalist Pokedex",
     description:
-      "Create an e-commerce product listing page using a JavaScript framework of your choice. The page should dynamically fetch product data, allow interaction through filtering and sorting, and include personalized features that simulate a modern shopping experience. Mandatory Requirements: Product Listing with image carousel, Filtering & Sorting with debounced input, 'Recommended for You' Section, Wishlist Feature, Pagination/Infinite Scroll & Price Range Filter, and Documentation. Bonus Challenges: Implement a fully functioning shopping cart with quantity controls and real-time total calculation, enhance accessibility and add smooth hover animations for product cards.",
+      "Build a premium, Apple-inspired web portal that integrates the PokeAPI to display Pokémon data through a lens of minimalism, high-quality typography, and fluid user interactions.\n\n Base Requirements: 1) Apple Aesthetic: Utilize 'San Francisco' style typography, generous white space, and a product-centric layout (e.g., clean lines and subtle gradients).\n2) Search & Fetch: Implement a search bar that queries the https://pokeapi.co/ database and renders data dynamically without full-page reloads.\n3) Interactive Stats: Display a 'Product Card' for each Pokémon featuring its official artwork, ID, and a beautifully visualized base stats section (HP, Attack, Defense, etc.).\n4) Robust Error Handling: Design graceful states for 'Not Found' queries or network issues using elegant UI notifications rather than browser alerts.\n\n Deliverables: 1) Refined Pokémon Interface: A single-page application (SPA) featuring a sleek search experience and a responsive detail view.\n2) Dynamic UI Components: Polished data visualization for stats and an 'Apple-style' loading state (e.g., a skeleton screen or a minimalist spinner).\n3) Creative Bonus Features: Implementation of a 'Shiny' toggle to switch sprite assets and a dynamic theme engine that adapts the site’s accent colors to the Pokémon’s type (e.g., Fire = Soft Red).",
     for: "senior",
   },
   {
@@ -358,22 +359,22 @@ const techTaskData = [
       "Build a Flutter sci-fi adventure where users play as a hacker trapped in a virtual world. They must navigate a corrupted system, solve logic-based puzzles, and bypass security layers to escape. Implement state management, branching paths, hacking-themed UI, and interactive terminals. Bonus: glitch effects, encryption puzzles, and adaptive soundscapes.",
 
     for: "senior",
-  },
-
+  }
+,
   {
     label: "cp",
-    title: "Task: Implement a Simple Sorting Algorithm and Compare Performance",
+    title: "HackerRank Competition",
     description:
-      "Description: Create a program that implements a basic sorting algorithm (e.g., Bubble Sort, Selection Sort, Insertion Sort) and compare its performance with other sorting algorithms using time complexity analysis.",
+      "A HackerRank Competition will be held on 'Date To be Announced'.\n\n Link to the Competition: ",
     for: "junior",
   },
 
   {
     label: "cp",
     title:
-      "Task: Develop a Basic Library Management System with CRUD Operations",
+      "HackerRank Competition",
     description:
-      "Description: Build a simple command-line based library management system that allows users to manage books and members using basic CRUD (Create, Read, Update, Delete) operations directly within the application.",
-    for: "junior",
+      "A HackerRank Competition will be held on 'Date To be Announced'.\n\n Link to the Competition: ",
+    for: "senior",
   },
-];
+]
