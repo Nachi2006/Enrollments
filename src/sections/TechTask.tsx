@@ -318,9 +318,9 @@ const techTaskData = [
   },
   {
     label: "app",
-    title: "The Curious Case of the Lost Journal",
+    title: "Student Club Enrollment App",
     description:
-      "Build a Flutter mystery adventure where users explore locations, collect clues, and make decisions leading to multiple endings. Implement state management, custom navigation, an inventory system, and dialogues. Bonus: animations, local storage, a mini-game, and dark mode. Tests logic, UI, and state handling. ",
+      "Build a student-centric application to streamline club discovery and membership enrollment through a searchable directory and a validated application workflow.\n\n Base Requirements: 1) Dynamic Club Directory: Create a searchable list or grid view of active clubs, featuring logos, descriptions, and category-based filtering (e.g., Tech, Arts, Sports).\n2) Standardized Enrollment Form: An integrated data-entry interface to capture Student ID, Name, validated Email, and a brief Interest Statement.\n3) User Feedback System: Implementation of visual confirmation via success screens or toast notifications to acknowledge successful submissions.\n\n Deliverables: 1) Functional Application UI: A responsive mobile app optimized for browsing, searching, and seamless form entry.\n2) Enrollment Data Pipeline: A logic-driven backend or state management system to collect, validate, and store student application data.\n3) Extended Management Features (Optional): Implementation of a protected Admin Dashboard for club leads, unique QR code generation for student IDs, or a push notification system for application status updates. ",
     for: "junior",
   },
   {
