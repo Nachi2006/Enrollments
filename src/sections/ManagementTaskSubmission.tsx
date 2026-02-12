@@ -4,7 +4,10 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import secureLocalStorage from "react-secure-storage";
 import { ToastContent } from "../components/CustomToast";
 import { jwtDecode, JwtPayload } from "jwt-decode";
-import { DraftResumeModal, DraftStatusIndicator } from "../hooks/useDraftSystem";
+import {
+  DraftResumeModal,
+  DraftStatusIndicator,
+} from "../hooks/useDraftSystem";
 
 interface Props {
   setOpenToast: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +32,11 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [lastSaved, setLastSaved] = useState<number | null>(null);
   const [showResumePrompt, setShowResumePrompt] = useState(false);
-  const [pendingDraft, setPendingDraft] = useState<{formData: FormData; subdomain: string[]; updatedAt: number} | null>(null);
+  const [pendingDraft, setPendingDraft] = useState<{
+    formData: FormData;
+    subdomain: string[];
+    updatedAt: number;
+  } | null>(null);
 
   interface FormData {
     [key: string]: [string, string];
@@ -38,10 +45,16 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [formData, setFormData] = useState<FormData>({});
   const syncTimerRef = useRef<number | null>(null);
-  const syncQueueRef = useRef<{formData: FormData; subdomain: string[]}[]>([]);
+  const syncQueueRef = useRef<{ formData: FormData; subdomain: string[] }[]>(
+    [],
+  );
   const broadcastChannelRef = useRef<BroadcastChannel | null>(null);
   const versionRef = useRef(0);
 
+  
+  const deadline = new Date("2026-02-12T18:00:00");
+  const isDeadlinePassed = new Date() >= deadline;
+  
   useEffect(() => {
     const token = Cookies.get("jwtToken");
     if (token) {
@@ -80,7 +93,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
       setSubDomain((prevDomains) => [...prevDomains, value]);
     } else {
       setSubDomain((prevDomains) =>
-        prevDomains.filter((domain) => domain !== value)
+        prevDomains.filter((domain) => domain !== value),
       );
     }
   };
@@ -98,10 +111,14 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
     const restoredFormData: FormData = {};
 
     Object.entries(task).forEach(([key, value]) => {
-      if (key.startsWith("question") && Array.isArray(value) && value.length > 0) {
+      if (
+        key.startsWith("question") &&
+        Array.isArray(value) &&
+        value.length > 0
+      ) {
         const val = value[0];
-        if (typeof val === 'string') {
-            restoredFormData[key] = ["", val];
+        if (typeof val === "string") {
+          restoredFormData[key] = ["", val];
         }
       }
     });
@@ -110,89 +127,89 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   }, []);
 
   useEffect(() => {
-      if (!DRAFT_KEY || !isDraftLoaded) return;
-  
-      const draft = {
-        id,
-        formData,
-        subdomain,
-        updatedAt: Date.now(),
-        version: ++versionRef.current,
-      };
-  
-      try {
-        localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-        setLastSaved(Date.now());
-      } catch (err) {
-        console.error("Failed to save draft:", err);
-      }
+    if (!DRAFT_KEY || !isDraftLoaded) return;
 
-      if (broadcastChannelRef.current) {
-        broadcastChannelRef.current.postMessage({
-          type: "DRAFT_UPDATE",
-          draft,
-          tabId: sessionStorage.getItem("tabId"),
-        });
-      }
-    }, [formData, subdomain, isDraftLoaded, DRAFT_KEY, id]);
+    const draft = {
+      id,
+      formData,
+      subdomain,
+      updatedAt: Date.now(),
+      version: ++versionRef.current,
+    };
 
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      setLastSaved(Date.now());
+    } catch (err) {
+      console.error("Failed to save draft:", err);
+    }
+
+    if (broadcastChannelRef.current) {
+      broadcastChannelRef.current.postMessage({
+        type: "DRAFT_UPDATE",
+        draft,
+        tabId: sessionStorage.getItem("tabId"),
+      });
+    }
+  }, [formData, subdomain, isDraftLoaded, DRAFT_KEY, id]);
 
   useEffect(() => {
-      if (!id) return;
-  
-      const initDraft = async () => {
-        if (DRAFT_KEY) {
-          const raw = localStorage.getItem(DRAFT_KEY);
-          if (raw) {
-            try {
-              const draft = JSON.parse(raw);
-              if (draft?.id === id) {
-                const hasContent = Object.keys(draft.formData || {}).length > 0 || 
-                                  (draft.subdomain || []).length > 0;
-                
-                if (hasContent) {
-                  setPendingDraft(draft);
-                  setShowResumePrompt(true);
-                  return;
-                }
+    if (!id) return;
+
+    const initDraft = async () => {
+      if (DRAFT_KEY) {
+        const raw = localStorage.getItem(DRAFT_KEY);
+        if (raw) {
+          try {
+            const draft = JSON.parse(raw);
+            if (draft?.id === id) {
+              const hasContent =
+                Object.keys(draft.formData || {}).length > 0 ||
+                (draft.subdomain || []).length > 0;
+
+              if (hasContent) {
+                setPendingDraft(draft);
+                setShowResumePrompt(true);
+                return;
               }
-            } catch (err) {
-              console.error("Failed to load local draft", err);
             }
+          } catch (err) {
+            console.error("Failed to load local draft", err);
           }
         }
+      }
 
-        try {
-          const token = Cookies.get("jwtToken");
-          if (!token) {
-            setIsDraftLoaded(true);
-            return;
-          }
-  
-          const res = await axios.get(
-            `${import.meta.env.VITE_BASE_URL}/upload/management/${id}`,
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
-          );
-  
-          const task = res.data?.data;
-  
-          if (!task || task.isDone) {
-            setIsDraftLoaded(true);
-            return;
-          }
-  
-          hydrateFromBackend(task);
-        } catch (err) {
-          console.error("Failed to fetch draft from backend", err);
-        } finally {
+      try {
+        const token = Cookies.get("jwtToken");
+        if (!token) {
           setIsDraftLoaded(true);
+          return;
         }
-      };
 
-      initDraft();
-    }, [id, DRAFT_KEY, hydrateFromBackend]);
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/upload/management/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        const task = res.data?.data;
+
+        if (!task || task.isDone) {
+          setIsDraftLoaded(true);
+          return;
+        }
+
+        hydrateFromBackend(task);
+      } catch (err) {
+        console.error("Failed to fetch draft from backend", err);
+      } finally {
+        setIsDraftLoaded(true);
+      }
+    };
+
+    initDraft();
+  }, [id, DRAFT_KEY, hydrateFromBackend]);
 
   const buildBackendPayload = useCallback(() => {
     const payload: Record<string, string[]> = {};
@@ -210,37 +227,37 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   }, [formData, subdomain]);
 
   const syncDraftToServer = useCallback(async () => {
-      if (!id) return;
-  
-      const token = Cookies.get("jwtToken");
-      if (!token) return;
-  
-      try {
-        setIsSyncing(true);
-        await axios.patch(
-          `${import.meta.env.VITE_BASE_URL}/upload/management/${id}`,
-          buildBackendPayload(),
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setSavingFields({});
-      } catch (err) {
-        console.error("Draft sync failed (will retry later)", err);
-        syncQueueRef.current.push({ formData, subdomain });
-      } finally {
-        setIsSyncing(false);
-      }
-    }, [id, buildBackendPayload, formData, subdomain]);
+    if (!id) return;
+
+    const token = Cookies.get("jwtToken");
+    if (!token) return;
+
+    try {
+      setIsSyncing(true);
+      await axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/upload/management/${id}`,
+        buildBackendPayload(),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setSavingFields({});
+    } catch (err) {
+      console.error("Draft sync failed (will retry later)", err);
+      syncQueueRef.current.push({ formData, subdomain });
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [id, buildBackendPayload, formData, subdomain]);
 
   const processOfflineQueue = useCallback(async () => {
     if (syncQueueRef.current.length === 0) return;
-    
+
     const queue = [...syncQueueRef.current];
     syncQueueRef.current = [];
-    
+
     for (const item of queue) {
       try {
         const token = Cookies.get("jwtToken");
@@ -256,7 +273,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
         await axios.patch(
           `${import.meta.env.VITE_BASE_URL}/upload/management/${id}`,
           payload,
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         );
       } catch (err) {
         console.error("Queue sync failed:", err);
@@ -287,7 +304,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (!DRAFT_KEY) return;
-      
+
       const draft = {
         id,
         formData,
@@ -295,7 +312,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
         updatedAt: Date.now(),
         version: versionRef.current,
       };
-      
+
       try {
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
       } catch (err) {
@@ -312,10 +329,12 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
             }
           });
 
-          const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+          const blob = new Blob([JSON.stringify(payload)], {
+            type: "application/json",
+          });
           navigator.sendBeacon(
             `${import.meta.env.VITE_BASE_URL}/upload/management/${id}?token=${token}`,
-            blob
+            blob,
           );
         }
       }
@@ -331,8 +350,10 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
     }
 
     try {
-      broadcastChannelRef.current = new BroadcastChannel(BROADCAST_CHANNEL_NAME);
-      
+      broadcastChannelRef.current = new BroadcastChannel(
+        BROADCAST_CHANNEL_NAME,
+      );
+
       broadcastChannelRef.current.onmessage = (event) => {
         const { type, draft, tabId } = event.data;
         const myTabId = sessionStorage.getItem("tabId");
@@ -355,27 +376,27 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   }, []);
 
   useEffect(() => {
-      if (!isDraftLoaded) return;
-      if (!id) return;
-  
+    if (!isDraftLoaded) return;
+    if (!id) return;
+
+    if (syncTimerRef.current) {
+      clearTimeout(syncTimerRef.current);
+    }
+
+    syncTimerRef.current = window.setTimeout(() => {
+      if (navigator.onLine) {
+        syncDraftToServer();
+      } else {
+        syncQueueRef.current.push({ formData, subdomain });
+      }
+    }, 2000);
+
+    return () => {
       if (syncTimerRef.current) {
         clearTimeout(syncTimerRef.current);
       }
-  
-      syncTimerRef.current = window.setTimeout(() => {
-        if (navigator.onLine) {
-          syncDraftToServer();
-        } else {
-          syncQueueRef.current.push({ formData, subdomain });
-        }
-      }, 2000);
-  
-      return () => {
-        if (syncTimerRef.current) {
-          clearTimeout(syncTimerRef.current);
-        }
-      };
-    }, [formData, subdomain, isDraftLoaded, id, syncDraftToServer]);
+    };
+  }, [formData, subdomain, isDraftLoaded, id, syncDraftToServer]);
 
   const resumeDraft = useCallback(() => {
     if (pendingDraft) {
@@ -396,17 +417,16 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
     setIsDraftLoaded(true);
   }, [DRAFT_KEY]);
 
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
-    question: string
+    question: string,
   ) => {
     const { name, value } = e.target;
 
-     setSavingFields((prev) => ({
-        ...prev,
-        [name]: true,
-      }));
+    setSavingFields((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
 
     setFormData((prevData) => ({
       ...prevData,
@@ -420,9 +440,19 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   };
 
   const handleSubmitManagementTask = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
+    const now = new Date();
+    
+    if (now >= deadline) {
+      setOpenToast(true);
+      setToastContent({
+        message: "We are not accepting more submissions now.",
+        type: "error",
+      });
+      return;
+    }
 
     if (subdomain.length === 0) {
       setOpenToast(true);
@@ -478,7 +508,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       // console.log("Response:", response.data);
       if (response.data) {
@@ -525,7 +555,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       // console.log(response.data);
 
@@ -540,7 +570,7 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
       const err = error as { response?: { data?: unknown }; message?: string };
       console.error(
         "Fetch User Details Error:",
-        err.response?.data || err.message
+        err.response?.data || err.message,
       );
     }
   };
@@ -567,6 +597,12 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
     };
     checkSubmissionStatus();
   }, []);
+
+  if (isDeadlinePassed) {
+    return (
+      <div className="p-4">Submissions are now closed. The deadline for this task has passed, and new responses are no longer being accepted. For participants who were unable to submit manually, the most recently saved draft has been automatically considered as their final submission. Thank you for your participation.</div>
+    );
+  }
 
   if (isManagementDone) {
     return (
@@ -644,7 +680,6 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
               />
               <span className="text-xs md:text-xs">Events</span>
             </label>
-            
           </div>
         </div>
         <textarea
@@ -657,9 +692,8 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
           placeholder="Write here..."
         ></textarea>
         <p className="text-xs">
-  {savingFields["question1"] ? "Saving..." : "Saved"}
-</p>
-
+          {savingFields["question1"] ? "Saving..." : "Saved"}
+        </p>
 
         <section className="my-8  text-xs md:text-sm">
           <span className="text-prime">
@@ -698,12 +732,12 @@ const ManagementTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
                     onChange={(e) => handleInputChange(e, quiz.question)}
                   ></textarea>
                   <p className="text-xs">
-  {savingFields[`question${quiz.label + 1}`] ? "Saving..." : "Saved"}
-</p>
-
-                  
+                    {savingFields[`question${quiz.label + 1}`]
+                      ? "Saving..."
+                      : "Saved"}
+                  </p>
                 </div>
-              )
+              ),
           )}
         </section>
         <p className="text-prime text-xs md:text-sm mt-4 md:mt-0">
