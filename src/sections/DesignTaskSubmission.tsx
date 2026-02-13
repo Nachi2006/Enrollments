@@ -40,6 +40,10 @@ const DesignTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   const broadcastChannelRef = useRef<BroadcastChannel | null>(null);
   const versionRef = useRef(0);
 
+  
+  const deadline = new Date("2026-02-12T18:00:00");
+  const isDeadlinePassed = new Date() >= deadline;
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     if (checked) {
@@ -393,6 +397,18 @@ const DesignTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
   const handleSubmitDesignTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+        const now = new Date();
+    
+    if (now >= deadline) {
+      setOpenToast(true);
+      setToastContent({
+        message: "We are not accepting more submissions now.",
+        type: "error",
+      });
+      return;
+    }
+
+
     if (subdomain.length === 0) {
       setOpenToast(true);
       setToastContent({
@@ -525,6 +541,12 @@ const DesignTaskSubmission = ({ setOpenToast, setToastContent }: Props) => {
     };
     checkSubmissionStatus();
   }, []);
+
+  if (isDeadlinePassed) {
+    return (
+      <div className="p-4">Submissions are now closed. The deadline for this task has passed, and new responses are no longer being accepted. For participants who were unable to submit manually, the most recently saved draft has been automatically considered as their final submission. Thank you for your participation.</div>
+    );
+  }
 
   if (isDesignDone) {
     return (

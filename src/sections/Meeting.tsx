@@ -30,14 +30,18 @@ const Meeting = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const timeSlots = [
+    { value: "21:00", label: "9:00PM to 9:20PM" },
     { value: "21:20", label: "9:20PM to 9:40PM" },
+    { value: "21:40", label: "9:40PM to 10:00PM" },
     { value: "22:00", label: "10:00PM to 10:20PM" },
+    { value: "22:20", label: "10:20PM to 10:40PM" },
     { value: "22:40", label: "10:40PM to 11:00PM" },
-    { value: "11:00", label: "11:00AM to 11:20AM" },
-    { value: "11:20", label: "11:20AM to 11:40AM" },
-    { value: "14:00", label: "2:00PM to 2:20PM" },
-    { value: "15:00", label: "3:00PM to 3:20PM" },
-    { value: "16:00", label: "4:00PM to 4:20PM" },
+    { value: "23:00", label: "11:00PM to 11:20PM" },
+    { value: "23:20", label: "11:20PM to 11:40PM" },
+    { value: "23:40", label: "11:40PM to 12:00AM" },
+    { value: "00:00", label: "12:00AM to 12:20AM" },
+    { value: "00:20", label: "12:20AM to 12:40AM" },
+    { value: "00:40", label: "12:40AM to 1:00AM" },
   ];
 
   const handleDate: (data: number) => void = (data) => {
@@ -203,8 +207,10 @@ const Meeting = () => {
 
   // Ensure date is properly padded (e.g., "05" instead of "5")
   const formattedDate = date ? String(date).padStart(2, '0') : null;
-  const scheduleTime = formattedDate ? `2025-12-${formattedDate}T${time}:00.000+05:30` : "";
+  const scheduleTime = formattedDate ? `2026-02-${formattedDate}T${time}:00.000+05:30` : "";
+  // const scheduleTime = "2026-02-14T12:20:00.000+00:00";
 
+  console.log("Constructed scheduleTime:", scheduleTime);
   useEffect(() => {
     if (gmeet && justBooked) {
       setShowBooked(true);
