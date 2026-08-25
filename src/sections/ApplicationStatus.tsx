@@ -61,7 +61,7 @@ const ApplicationStatus = () => {
             <button
               onClick={() => setSelectedDomain(1)}
               type="button"
-              className={`nes-btn w-full lg:h-[20%] text-sm  md:text-base domain-btn${
+              className={`nes-btn w-full lg:h-[20%] text-sm  md:text-base domain-btn ${
                 selectedDomain === 1 ? "is-primary" : ""
               }`}
             >
@@ -72,7 +72,7 @@ const ApplicationStatus = () => {
             <button
               onClick={() => setSelectedDomain(2)}
               type="button"
-              className={`nes-btn w-full lg:h-[20%] text-sm  md:text-base domain-btn${
+              className={`nes-btn w-full lg:h-[20%] text-sm  md:text-base domain-btn ${
                 selectedDomain === 2 ? "is-primary" : ""
               }`}
             >
