@@ -38,7 +38,7 @@ export const initConsoleEasterEgg = () => {
     ║      ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝                    ║
     ║                                                                              ║
     ║                    🦊  CLUB RECRUITMENT PORTAL  🦊                           ║
-    ║                         VIT CHENNAI CHAPTER                                  ║
+    ║                         VIT VELLORE CHAPTER                                  ║
     ║                                                                              ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
   `;
@@ -311,7 +311,7 @@ export const initConsoleEasterEgg = () => {
     console.log(`
 %c╔════════════════════════════════════════════════════════════════╗
 ║                                                                ║
-║   🦊 MOZILLA FIREFOX CLUB - VIT CHENNAI 🦊                    ║
+║   🦊 MOZILLA FIREFOX CLUB - VIT VELLORE 🦊                    ║
 ║                                                                ║
 ║   📅 Established: Part of the global Mozilla community         ║
 ║                                                                ║
