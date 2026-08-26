@@ -27,11 +27,16 @@ const NavbarComponent = () => {
   ];
 
   return (
-    <nav className="nav h-full w-full md:max-w-[100px] flex flex-row md:flex-col justify-around items-center border-dashed border-2 border-spacing-4 md:border-spacing-8 border-prime md:border-r-0 p-4 md:p-0 sm:border-b-2">
+    <nav className="nav w-full h-auto md:h-full md:max-w-[100px]
+      flex flex-row md:flex-col
+      justify-around items-center
+      border-dashed border-2 border-spacing-4 md:border-spacing-8
+      border-prime md:border-r-0
+      p-2 md:p-0 sm:border-b-2">
       {menuItems.map((item) => (
         <div
           key={item.id}
-          className="relative z-[150] scale-75 lg:scale-100 cursor-pointer group"
+          className="relative z-[150] scale-50 sm:scale-75 lg:scale-100 cursor-pointer group"
           onClick={() => {
             if (item.action) item.action();
             navigate(item.route);

@@ -1022,3 +1022,63 @@ input[type="password"] {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* MOBILE RESPONSIVENESS */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .faq-page-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+    padding: 8px;
+  }
+
+  .faq-content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 20px 8px;
+  }
+
+  .faq-title {
+    font-size: clamp(1.25rem, 7vw, 2rem) !important;
+    line-height: 1.35;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  .faq-subtitle {
+    font-size: clamp(0.55rem, 2.5vw, 0.8rem);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .faq-item {
+    padding: 14px 10px;
+  }
+}

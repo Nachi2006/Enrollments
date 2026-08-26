@@ -132,7 +132,7 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen h-full flex flex-col md:flex-row justify-center items-center pt-0 px-4 overflow-hidden">
+    <div className="w-full max-w-full min-w-0 min-h-screen h-full flex flex-col md:flex-row justify-center items-center pt-0 px-2 sm:px-4 overflow-hidden">
       <Navbar />
       <BoundingBox className="relative overflow-hidden">
         <div className="scroll-indicator" aria-hidden>
