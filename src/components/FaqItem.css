@@ -2,12 +2,16 @@
 
 .faq-page-container {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   height: 100%;
   max-height: 100%;
   position: relative;
   font-family: 'Press Start 2P', cursive;
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .scroll-indicator {
@@ -31,9 +35,20 @@
 }
 
 .faq-content-wrapper {
+  width: 100%;
   max-width: 1200px;
+  min-width: 0;
   margin: 0 auto;
   padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .faq-content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 8px;
+  }
 }
 
 .faq-header {
@@ -42,13 +57,23 @@
 }
 
 .faq-title {
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.4rem, 7vw, 4rem);
   color: #fc7a00;
   text-shadow: 4px 4px 0px rgba(252, 122, 0, 0.35);
   margin-bottom: 20px;
-  letter-spacing: 3px;
+  letter-spacing: clamp(1px, 0.5vw, 3px);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
+@media (max-width: 768px) {
+  .faq-title {
+    font-size: clamp(1.25rem, 7vw, 2rem) !important;
+    line-height: 1.35;
+    letter-spacing: 1px;
+  }
+}
 
 .faq-subtitle {
   font-size: clamp(0.7rem, 2vw, 1rem);
@@ -127,6 +152,18 @@
   margin-bottom: 20px;
 }
 
+@media (max-width: 768px) {
+  .question-section {
+    gap: 10px;
+  }
+
+  .question-text,
+  .answer-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
 
 .question-text {
   font-size: clamp(0.8rem, 1.5vw, 1.1rem);
@@ -190,7 +227,8 @@
   }
 
   .faq-item {
-    padding: 20px;
+    padding: 14px 10px;
+    border-radius: 10px;
   }
 
   .avatar {
